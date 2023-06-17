@@ -1,0 +1,18 @@
+.day {
+   
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 0.2fr;
+    grid-row-gap: 5vh;
+    justify-items: center;
+}
+#menuPage{
+    margin: auto;
+    text-align: center;
+}
+.meal {
+    background-color: rgb(255, 108, 55);
+    padding: 2vh;
+    margin: 1vh;
+    padding-left: 10vw;
+}
