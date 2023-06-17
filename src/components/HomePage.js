@@ -10,10 +10,10 @@ export default function HomePage() {
     const userDetails = useSelector(state => state.userReducer)
     console.log(userDetails);
     const checkMenu = () => {
-       //if(userDetails.code == 0){
-        //    console.log("Please Signin/Login before")
-        //}
-       // else
+       if(userDetails.code == 0){
+           console.log("Please Signin/Login before")
+        }
+       else
         {
             navigate("/menu")
         }

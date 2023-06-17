@@ -45,30 +45,30 @@ export default function MenuSettings() {
         .catch(error => console.error(error))
     }
     return (
-        <div>
-      {editing ? (
-        <div>
-          <input type="text" value={newTitle} onChange={handleTitleChange} />
-          <button onClick={handleSaveClick}>Save</button>
-          <button onClick={handleCancelClick}>Cancel</button>
-        </div>
-      ) : (
-        <div>
-          <h1>{newTitle}</h1>
-          <button onClick={handleEditClick}>Edit</button>
-        </div>
-      )}
-    </div>
-        // <>
-        //     <h1>{dictionary.dailyMealStructure[lang]}</h1>
-        //     <Form>
-        //     {Object.keys(meals).map(name => (
-        //                         <Form.Group controlId={name}>
-        //                             <Form.Label >{meals[name][lang]}</Form.Label>
-        //                             <Form.Control defaultValue={meals[name][lang]}/>
-        //                         </Form.Group>
-        //                     ))}
-        //     </Form>
-        // </>
+    //     <div>
+    //   {editing ? (
+    //     <div>
+    //       <input type="text" value={newTitle} onChange={handleTitleChange} />
+    //       <button onClick={handleSaveClick}>Save</button>
+    //       <button onClick={handleCancelClick}>Cancel</button>
+    //     </div>
+    //   ) : (
+    //     <div>
+    //       <h1>{newTitle}</h1>
+    //       <button onClick={handleEditClick}>Edit</button>
+    //     </div>
+    //   )}
+    // </div>
+        <>
+            <h1>{dictionary.dailyMealStructure[lang]}</h1>
+            <Form>
+            {Object.keys(meals).map(name => (
+                                <Form.Group controlId={name}>
+                                    {/* <Form.Label >{meals[name][lang]}</Form.Label> */}
+                                    <Form.Control defaultValue={meals[name][lang]}/>
+                                </Form.Group>
+                            ))}
+            </Form>
+        </>
     );
 }
