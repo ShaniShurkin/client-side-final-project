@@ -14,5 +14,8 @@
     background-color: rgb(255, 108, 55);
     padding: 2vh;
     margin: 1vh;
-    padding-left: 10vw;
+    /* padding-left: 10vw; */
+}
+Button{
+    margin: 1vh !important;
 }
