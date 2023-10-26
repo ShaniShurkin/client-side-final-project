@@ -65,15 +65,15 @@ const dictionary = {
     },
     signup: {
         en: 'Sign Up',
-        he: 'הרשמ/י',
+        he: 'הרשם',
     },
     signin: {
         en: 'Sign In',
-        he: 'התחבר/י',
+        he: 'התחבר',
     },
     signout: {
         en: "Sign Out",
-        he: 'התנתק/י'
+        he: 'התנתק'
     },
     activityLevel:{
         en: "Physical Activity",
