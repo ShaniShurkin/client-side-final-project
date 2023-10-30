@@ -7,11 +7,12 @@ import { useForm } from 'react-hook-form';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-export default function MenuSettings() {
+export default function MenuSettings(props) {
     const naviget = useNavigate()
     const { register, handleSubmit, errors } = useForm();
     const onSubmit = (data) => {
         console.log(data);
+        props.updateUser(data);
         naviget('/signup/food-settings');
         // props.history.push('/second');
     };

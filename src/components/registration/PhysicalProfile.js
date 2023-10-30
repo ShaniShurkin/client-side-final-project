@@ -16,6 +16,7 @@ export default function PhysicalProfile(props) {
     const { register, handleSubmit, errors } = useForm();
     const onSubmit = (data) => {
         console.log(data);
+        props.updateUser(data);
         naviget('/signup/menu-settings');
         // props.history.push('/second');
     };

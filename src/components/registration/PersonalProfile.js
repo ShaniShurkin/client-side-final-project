@@ -25,6 +25,7 @@ export default function PersonalProfile(props) {
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
     console.log(data.target.first_name.value);
+    props.updateUser(data);
     naviget('/signup/pysical-profile');
     // props.history.push('/second');
   };

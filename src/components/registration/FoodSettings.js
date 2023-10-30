@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-export default function FoodSettings() {
+export default function FoodSettings(props) {
     const { register, handleSubmit, errors } = useForm();
     const onSubmit = (data) => {
         console.log(data);
