@@ -5,10 +5,21 @@
 // import { enterDetailsForDiet } from "../../redux/actions/addDetailsToUser";
 // import { urlClient } from "../../endpoints";
 
+import { useForm } from 'react-hook-form';
+import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
+
 //change age to born date
-export default function PhysicalProfile() {
+export default function PhysicalProfile(props) {
+    const naviget = useNavigate()
+    const { register, handleSubmit, errors } = useForm();
+    const onSubmit = (data) => {
+        console.log(data);
+        naviget('/signup/menu-settings');
+        // props.history.push('/second');
+    };
+
 
     // const dispatch = useDispatch();
     // const lang = (useSelector(state => state.langReducer)).langShortName;
@@ -68,9 +79,38 @@ export default function PhysicalProfile() {
     //   }
 
     return (
-        <div>
-            Second Step Form
-        </div>
+        <>
+            <div>
+                Second Step Form
+            </div>
+            <Form className="input-form" onSubmit={onSubmit}>
+                <div className="col-md-6 offset-md-3">
+                    <Form.Group controlId="last_name">
+                        <Form.Label>Last Name</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="last_name"
+                            placeholder="Enter your last name"
+                            autoComplete="off"
+                        // ref={register({
+                        //   required: 'last name is required.',
+                        //   pattern: {
+                        //     value: /^[a-zA-Z]+$/,
+                        //     message: 'last name should contain only characters.'
+                        //   }
+                        // })}
+                        // className={`${errors.last_name ? 'input-error' : ''}`}
+                        />
+                        {/* {errors.last_name && (
+              <p className="errorMsg">{errors.last_name.message}</p>
+            )} */}
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                        Next
+                    </Button>
+                </div>
+            </Form>
+        </>
         // <>
         //     <Form onSubmit={handleSubmit} style={{ margin: "10vh 30vw", width: "40vw" }} dir={dictionary.dir[lang]}>
         //         <Form.Group controlId="formBasicGender">

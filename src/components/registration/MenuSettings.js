@@ -1,11 +1,20 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { urlMenu } from "../../endpoints";
 import dictionary from "../dictionary";
+import { useForm } from 'react-hook-form';
+import { Form, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function MenuSettings() {
+    const naviget = useNavigate()
+    const { register, handleSubmit, errors } = useForm();
+    const onSubmit = (data) => {
+        console.log(data);
+        naviget('/signup/food-settings');
+        // props.history.push('/second');
+    };
     // const lang = (useSelector(state => state.langReducer)).langShortName;
     // const [meals, setMeals] = useState({});
     // useEffect(() => {
@@ -46,6 +55,38 @@ export default function MenuSettings() {
     //         .catch(error => console.error(error))
     // }
     return (
+        <>
+            <div>
+                Third Step Form
+            </div>
+            <Form className="input-form" onSubmit={onSubmit}>
+                <div className="col-md-6 offset-md-3">
+                    <Form.Group controlId="Phone_number">
+                        <Form.Label>Phone numbere</Form.Label>
+                        <Form.Control
+                            type="number"
+                            name="Phone_number"
+                            placeholder="Enter your phone number"
+                            autoComplete="off"
+                        // ref={register({
+                        //   required: 'First name is required.',
+                        //   pattern: {
+                        //     value: /^[a-zA-Z]+$/,
+                        //     message: 'First name should contain only characters.'
+                        //   }
+                        // })}
+                        // className={`${errors.first_name ? 'input-error' : ''}`}
+                        />
+                        {/* {errors.first_name && (
+              <p className="errorMsg">{errors.first_name.message}</p>
+            )} */}
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                        Next
+                    </Button>
+                </div>
+            </Form>
+        </>
         //     <div>
         //   {editing ? (
         //     <div>
@@ -71,8 +112,6 @@ export default function MenuSettings() {
         //                     ))}
         //     </Form>
         // </>
-        <div>
-            Third Step Form
-        </div>
+
     );
 }

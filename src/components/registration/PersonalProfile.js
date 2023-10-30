@@ -6,8 +6,11 @@
 // import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 // import { useNavigate } from 'react-router-dom';
 // import { enterDetailsForDiet, enterGeneralDetails } from '../../redux/actions/addDetailsToUser';
-
-export default function PersonalProfile() {
+import { useForm } from 'react-hook-form';
+import { Form, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+export default function PersonalProfile(props) {
 
 
   // const lang = (useSelector(state => state.langReducer)).langShortName;
@@ -17,6 +20,14 @@ export default function PersonalProfile() {
 
   // const [response, setResponse] = useState(null);
   // const [isExists, setIsExists] = useState(false);
+
+  const naviget = useNavigate()
+  const { register, handleSubmit, errors } = useForm();
+  const onSubmit = (data) => {
+    console.log(data.target.first_name.value);
+    naviget('/signup/pysical-profile');
+    // props.history.push('/second');
+  };
 
   // function handleSubmit(e) {
   //   e.preventDefault();
@@ -103,9 +114,38 @@ export default function PersonalProfile() {
   // }
 
   return (
-    <div>
-      First Step Form
-    </div>
+    <>
+      <div>
+        first Step Form
+      </div>
+      <Form className="input-form" onSubmit={onSubmit}>
+        <div className="col-md-6 offset-md-3">
+          <Form.Group controlId="first_name">
+            <Form.Label>First Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="first_name"
+              placeholder="Enter your first name"
+              autoComplete="off"
+              // ref={register({
+              //   required: 'First name is required.',
+              //   pattern: {
+              //     value: /^[a-zA-Z]+$/,
+              //     message: 'First name should contain only characters.'
+              //   }
+              // })}
+              // className={`${errors.first_name ? 'input-error' : ''}`}
+            />
+            {/* {errors.first_name && (
+              <p className="errorMsg">{errors.first_name.message}</p>
+            )} */}
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            Next
+          </Button>
+        </div>
+      </Form>
+    </>
     // <>
     // <h1>1</h1>
     //   <Form onSubmit={handleSubmit} style={{ margin: "10vh 30vw", width: "40vw" }}>

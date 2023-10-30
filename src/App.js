@@ -54,7 +54,8 @@ function App() {
           {/* <Route exact path='/signup' element={
             <GoogleOAuthProvider clientId="160032418862-8oovjq0ab2dgkojd1bll2s8du62p4oo4.apps.googleusercontent.com"><SignUp /> </GoogleOAuthProvider>
           }></Route> */}
-          <Route path="/signup" element={<Signup/>} />
+          <Route path="/signup/*" element={<Signup/>} />
+          
           <Route exact path='/signin' element={<SignIn/>}></Route>
           <Route exact path='/signout' element={<SignOut />}></Route>
           <Route exact path='/details' element={<Details />}></Route>

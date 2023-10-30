@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
+import { Outlet } from "react-router-dom";
 import Progress from './Progress';
 import Step1 from './PersonalProfile';
 import Step2 from './PhysicalProfile';
@@ -11,11 +11,10 @@ export default function Signup() {
         <div>
             <Progress />
             <Routes>
-                <Route path="/signup/step1" component={Step1} />
-                <Route path="/signup/step2" component={Step2} />
-                <Route path="/signup/step3" component={Step3} />
-                <Route path="/signup/step4" component={Step4} />
-                <Route path="/signup" component={Step1} />
+                <Route exact path="/" element={<Step1 />} />
+                <Route path="/pysical-profile" element={<Step2 />} />
+                <Route exact path="/menu-settings" element={<Step3 />} />
+                <Route exact path="/food-settings" element={<Step4 />} />
             </Routes>
         </div>
     );
