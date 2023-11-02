@@ -5,57 +5,33 @@ import Step1 from './PersonalProfile';
 import Step2 from './PhysicalProfile';
 import Step3 from './MenuSettings';
 import Step4 from './FoodSettings';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import React from 'react';
 export default function Signup() {
     const [user, setUser] = useState({});
-
+    useEffect(() => {
+        console.log("has changed")
+        console.log(user);
+    }, [user])
     const updateUser = (data) => {
-        setUser((prevUser) => ({ ...prevUser, ...data }));
+        console.log("origin")
+        console.log(user);
+        console.log("added")
+        console.log(data)
+        setUser((prevUser) => ({ ...prevUser, ...data }))
     };
 
     const resetUser = () => {
         setUser({});
     };
-    // const step1_bla_bla = React.memo(Step1)
-
     return (
         <div>
             <Progress />
-            <Routes>
-                //לחקור איך משתמשים בuse memo במקום ב render שלא מציג את הקומפוננטה
-                {/* <Route path="/" element={step1_bla_bla}></Route>
-                <Route path="/pysical-profile" element={<Step2 />}></Route>
-                <Route path="/menu-settings" element={<Step3 />}></Route> */}
-
-                <Route
-                    render={(props) => (
-                        <Step1 {...props} user={user} updateUser={updateUser} />
-                    )}
-                    path="/"
-                    exact={true}
-                />
-                <Route
-                    render={(props) => (
-                        <Step2 {...props} user={user} updateUser={updateUser} />
-                    )}
-                    path="/pysical-profile"
-                    exact={true}
-                />
-                <Route
-                    render={(props) => (
-                        <Step3 {...props} user={user} updateUser={updateUser} />
-                    )}
-                    path="/menu-settings"
-                    exact={true}
-                />
-                <Route
-                    render={(props) => (
-                        <Step4 {...props} user={user} updateUser={updateUser} />
-                    )}
-                    path="/food-settings"
-                    exact={true}
-                />
+            <Routes> 
+                <Route path="/" Component={(props) => (<Step1 {...props} user={user} updateUser={updateUser}/>)}/>
+                <Route path="/pysical-profile" Component={(props) => (<Step2 {...props} user={user} updateUser={updateUser}/>)}/>
+                <Route path="/menu-settings" Component={(props) => (<Step3/>)}/>
+                <Route path="/food-settings" Component={(props) => (<Step4/>)}/>            
             </Routes>
         </div>
     );

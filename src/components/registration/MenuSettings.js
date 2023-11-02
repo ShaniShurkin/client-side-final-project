@@ -6,15 +6,13 @@ import dictionary from "../dictionary";
 import { useForm } from 'react-hook-form';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import React from "react";
 
-export default function MenuSettings(props) {
+const MenuSettings = React.memo((props) => {
     const naviget = useNavigate()
     const { register, handleSubmit, errors } = useForm();
     const onSubmit = (data) => {
-        console.log(data);
-        props.updateUser(data);
         naviget('/signup/food-settings');
-        // props.history.push('/second');
     };
     // const lang = (useSelector(state => state.langReducer)).langShortName;
     // const [meals, setMeals] = useState({});
@@ -115,4 +113,7 @@ export default function MenuSettings(props) {
         // </>
 
     );
-}
+});
+
+
+export default MenuSettings;

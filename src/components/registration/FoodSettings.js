@@ -2,12 +2,12 @@
 import { useForm } from 'react-hook-form';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
-export default function FoodSettings(props) {
+const FoodSettings = React.memo((props) => {
     const { register, handleSubmit, errors } = useForm();
     const onSubmit = (data) => {
         console.log(data);
-        // props.history.push('/second');
     };
     return (
         <>
@@ -43,4 +43,7 @@ export default function FoodSettings(props) {
             </Form>
         </>
     )
-}
+});
+
+
+export default FoodSettings;

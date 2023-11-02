@@ -8,17 +8,17 @@
 import { useForm } from 'react-hook-form';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-
+import React from 'react';
 
 //change age to born date
-export default function PhysicalProfile(props) {
+const PhysicalProfile = React.memo((props) => {
     const naviget = useNavigate()
     const { register, handleSubmit, errors } = useForm();
-    const onSubmit = (data) => {
-        console.log(data);
-        props.updateUser(data);
+    const onSubmit = (e) => {
+        const data = new FormData(e.target);
+        const user = Object.fromEntries(data.entries());
+        props.updateUser(user)
         naviget('/signup/menu-settings');
-        // props.history.push('/second');
     };
 
 
@@ -86,12 +86,12 @@ export default function PhysicalProfile(props) {
             </div>
             <Form className="input-form" onSubmit={onSubmit}>
                 <div className="col-md-6 offset-md-3">
-                    <Form.Group controlId="last_name">
+                    <Form.Group controlId="jjj">
                         <Form.Label>Last Name</Form.Label>
                         <Form.Control
                             type="text"
-                            name="last_name"
-                            placeholder="Enter your last name"
+                            name="jjj"
+                            placeholder="Enter your jjj"
                             autoComplete="off"
                         // ref={register({
                         //   required: 'last name is required.',
@@ -159,4 +159,6 @@ export default function PhysicalProfile(props) {
         //     </Form>
         // </>
     )
-}
+});
+
+export default PhysicalProfile;  
