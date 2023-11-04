@@ -18,15 +18,20 @@ const PersonalProfile = React.memo((props) => {
   const [response, setResponse] = useState(null);
   const [isExists, setIsExists] = useState(false);
 
-  const naviget = useNavigate()
-  const { register, handleSubmit, errors } = useForm();
-  const onSubmit = (e) => {
-    const data = new FormData(e.target);
-    const user = Object.fromEntries(data.entries());
-    props.updateUser(user)
-    naviget('/signup/pysical-profile');
+  const { user } = props;
+  const { register, handleSubmit, getValues, formState: { errors } } = useForm({
+    defaultValues: {
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      password: user.password,
+      cpassword: user.cpassword
+    }
+  });
+  const onSubmit = (data) => {
+    props.updateUser(data)
+    navigate('/signup/pysical-profile');
   };
-
   // function handleSubmit(e) {
   //   e.preventDefault();
   //   const data = {
@@ -62,28 +67,7 @@ const PersonalProfile = React.memo((props) => {
   // const errorMessage = (error) => {
   //   console.log(error);
   // };
-  const [password, setPassword] = useState({ password: "", isValid: true, isConfirmed: true });
-  const checkPassword = (e) => {
-    const pass = e.target.value;
-    if (pass.match(/[a-z]/g) && pass.match(
-      /[A-Z]/g) && pass.match(
-        /[0-9]/g) && pass.match(
-          /[^a-zA-Z\d]/g) && pass.length >= 8) {
-      setPassword((prevState) => ({ ...prevState, isValid: true, password: pass }));
-    }
-    else {
-      setPassword((prevState) => ({ ...prevState, isValid: false }));
-    }
-  }
-  const confirmPassword = (e) => {
-    const pass = e.target.value;
-    if (pass === password.password) {
-      setPassword((prevState) => ({ ...prevState, isConfirmed: true }));
-    }
-    else {
-      setPassword((prevState) => ({ ...prevState, isConfirmed: false }));
-    }
-  }
+
   // const checkIfUserExists = async (emailAddress) => {
   //   return fetch(url + `get/${emailAddress}`, {
   //     method: 'GET'
@@ -110,53 +94,103 @@ const PersonalProfile = React.memo((props) => {
   //       return error;
   //     });
   // }
-
+  const validateConfirmPassword = (value) => {
+    console.log(value);
+    const password =  getValues("password") ;
+    console.log(password)
+    if (value !== password) {
+      return 'Passwords do not match.';
+    }
+    return true;
+  };
   return (
     <>
       <div>
         first Step Form
       </div>
-      <Form className="input-form" onSubmit={onSubmit}>
+      <Form className="input-form" onSubmit={handleSubmit(onSubmit)}>
         <div className="col-md-6 offset-md-3">
           <Form.Group controlId="first_name">
             <Form.Label>{dictionary.firstName[lang]}</Form.Label>
             <Form.Control
               type="text"
-              name="first_name"
               autoComplete="off"
-            // ref={register({
-            //   required: 'First name is required.',
-            //   pattern: {
-            //     value: /^[a-zA-Z]+$/,
-            //     message: 'First name should contain only characters.'
-            //   }
-            // })}
-            // className={`${errors.first_name ? 'input-error' : ''}`}
+              {...register('first_name', {
+                required: 'First name is required.'
+                // , pattern: {
+                //   value: /^[^\d\W_]+$/,
+                //   message: 'First name should contain only characters.'
+                // }
+              })}
+              className={`${errors.first_name ? 'input-error' : ''}`}
             />
-            {/* {errors.first_name && (
+            {errors.first_name && (
               <p className="errorMsg">{errors.first_name.message}</p>
-            )} */}
+            )}
           </Form.Group>
           <Form.Group controlId="last_name">
             <Form.Label>{dictionary.lastName[lang]}</Form.Label>
             <Form.Control
               type="text"
               name="last_name"
-              autoComplete="off" />
+              autoComplete="off"
+              {...register('last_name', {
+                required: 'Last name is required.'
+                // , pattern: {
+                //   value: /^[^\d\W_]+$/,
+                //   message: 'Last name should contain only characters.'
+                // }
+              })}
+              className={`${errors.last_name ? 'input-error' : ''}`}
+            />
+            {errors.last_name && (
+              <p className="errorMsg">{errors.last_name.message}</p>
+            )}
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group controlId="email">
             <Form.Label>{dictionary.email[lang]}</Form.Label>
-            <Form.Control type="email" />
+            <Form.Control
+              {...register('email', {
+                required: 'Email is required.',
+                type: 'email', pattern: {
+                  value: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/,
+                  message: 'Enter a valid email address.'
+                }
+              })}
+              className={`${errors.email ? 'input-error' : ''}`} />
+            {errors.email && (
+              <p className="errorMsg">{errors.email.message}</p>
+            )}
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>{dictionary.password[lang]}</Form.Label>
-            <Form.Control type="password" onChange={checkPassword} />
-            {!password.isValid && <p style={{ color: "red", fontSize: "12px" }}>{dictionary.strongPassword[lang]}</p>}
+            <Form.Control
+            type='password'
+              {...register('password', {
+                required: 'Password is required.',
+                pattern: {
+                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!?]).{8,}$/,
+                  message: dictionary.strongPassword[lang]
+                }
+              })}
+              className={`${errors.password ? 'input-error' : ''}`} />
+            {errors.password && (
+              <p className="errorMsg">{errors.password.message}</p>
+            )}
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
             <Form.Label>{dictionary.confirmPassword[lang]}</Form.Label>
-            <Form.Control type="password" onChange={confirmPassword} />
-            {!password.isConfirmed && <p style={{ color: "red", fontSize: "12px" }}>{dictionary.notConfirmedPassword[lang]}</p>}
+            <Form.Control
+            type='password'
+              {...register('cpassword', {
+                required: 'Password validation is required.',
+                validate: validateConfirmPassword
+              })}
+              className={`${errors.cpassword ? 'input-error' : ''}`}
+            />
+             {errors.cpassword && (
+              <p className="errorMsg">{dictionary.notConfirmedPassword[lang]}</p>
+            )}
           </Form.Group>
           <Button variant="primary" type="submit">
             Next
@@ -164,41 +198,6 @@ const PersonalProfile = React.memo((props) => {
         </div>
       </Form>
     </>
-    // <>
-    // <h1>1</h1>
-    //   <Form onSubmit={handleSubmit} style={{ margin: "10vh 30vw", width: "40vw" }}>
-    //     <div>{isExists && <p>{dictionary.userExists[lang]}. </p>}
-    //       <a href="/signin">{dictionary.signin[lang]}</a></div>
-    //     <Form.Group className="mb-3" controlId="formBasicFirstName">
-    //       <Form.Label>{dictionary.firstName[lang]}</Form.Label>
-    //       <Form.Control type="text" required/>
-    //     </Form.Group>
-    //     <Form.Group className="mb-3" controlId="formBasicLastName">
-    //       <Form.Label>{dictionary.lastName[lang]}</Form.Label>
-    //       <Form.Control type="text" />
-    //     </Form.Group>
-    //     {/* <Form.Group className="mb-3" controlId="formBasicFullName">
-    //       <Form.Label>{dictionary.fullName[lang]}</Form.Label>
-    //       <Form.Control type="text" required />
-    //     </Form.Group> */}
-    //     <Form.Group className="mb-3" controlId="formBasicEmail">
-    //       <Form.Label>{dictionary.email[lang]}</Form.Label>
-    //       <Form.Control type="email" required />
-    //     </Form.Group>
-    //     <Form.Group className="mb-3" controlId="formBasicPassword">
-    //       <Form.Label>{dictionary.password[lang]}</Form.Label>
-    //       <Form.Control type="password" required onChange={checkPassword} />
-    //       {!password.isValid && <p style={{ color: "red", fontSize: "12px" }}>{dictionary.strongPassword[lang]}</p>}
-    //     </Form.Group>
-    //     <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
-    //       <Form.Label>{dictionary.confirmPassword[lang]}</Form.Label>
-    //       <Form.Control type="password" required onChange={confirmPassword} />
-    //       {!password.isConfirmed && <p style={{ color: "red", fontSize: "12px" }}>{dictionary.notConfirmedPassword[lang]}</p>}
-    //     </Form.Group>
-    //     <Button disabled={!password.isConfirmed || !password.isValid} variant="primary" type="submit">
-    //       {dictionary.signup[lang]}
-    //     </Button>
-    //   </Form>
     //   {/* doesnt work now */}
     //   <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
     // </>
