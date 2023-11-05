@@ -1,7 +1,7 @@
 // import { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { Button, Form } from "react-bootstrap";
-// import dictionary from "../dictionary";
+import dictionary from "../dictionary";
 // import { enterDetailsForDiet } from "../../redux/actions/addDetailsToUser";
 // import { urlClient } from "../../endpoints";
 
@@ -13,7 +13,16 @@ import React from 'react';
 //change age to born date
 const PhysicalProfile = React.memo((props) => {
     const naviget = useNavigate()
-    const { register, handleSubmit, errors } = useForm();
+    const { user } = props;
+    const { register, handleSubmit, getValues, formState: { errors } } = useForm({
+        defaultValues: {
+            gender: user.gender,
+            weight: user.weight,
+            height: user.height,
+            age: user.age,
+            activityLevel: user.activityLevel
+        }
+    });
     const onSubmit = (e) => {
         const data = new FormData(e.target);
         const user = Object.fromEntries(data.entries());
@@ -22,8 +31,8 @@ const PhysicalProfile = React.memo((props) => {
     };
 
 
-    // const dispatch = useDispatch();
-    // const lang = (useSelector(state => state.langReducer)).langShortName;
+    const dispatch = useDispatch();
+    const lang = (useSelector(state => state.langReducer)).langShortName;
     // const userDetails = useSelector(state => state.userReducer)
     // const [selected, setSelected] = useState({ gender: "" });
     // const { gender } = selected;
@@ -84,27 +93,93 @@ const PhysicalProfile = React.memo((props) => {
             <div>
                 Second Step Form
             </div>
-            <Form className="input-form" onSubmit={onSubmit}>
+            <Form className="input-form" onSubmit={handleSubmit(onSubmit)}>
                 <div className="col-md-6 offset-md-3">
-                    <Form.Group controlId="jjj">
-                        <Form.Label>Last Name</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="jjj"
-                            placeholder="Enter your jjj"
-                            autoComplete="off"
-                        // ref={register({
-                        //   required: 'last name is required.',
-                        //   pattern: {
-                        //     value: /^[a-zA-Z]+$/,
-                        //     message: 'last name should contain only characters.'
-                        //   }
-                        // })}
-                        // className={`${errors.last_name ? 'input-error' : ''}`}
+                    <Form.Group controlId="formBasicGender">
+                        <Form.Label>{dictionary.gender[lang]}</Form.Label>
+                        <Form.Check
+                            name="gender"
+                            value="Male"
+                            type="radio"
+                            aria-label="radio 1"
+                            label={dictionary.male[lang]}
+                            {...register('gender', {
+                                required: 'Gender is required.'
+                            })}
+                            className={`${errors.gender ? 'input-error' : ''}`}
                         />
-                        {/* {errors.last_name && (
-              <p className="errorMsg">{errors.last_name.message}</p>
-            )} */}
+                        <Form.Check
+                            name="gender"
+                            value="Female"
+                            type="radio"
+                            aria-label="radio 2"
+                            label={dictionary.female[lang]}
+                            {...register('gender', {
+                                required: 'Gender is required.'
+                            })}
+                            className={`${errors.gender ? 'input-error' : ''}`}
+                        />
+                        {errors.gender && (
+                            <p className="errorMsg">{errors.gender.message}</p>
+                        )}
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicWeight">
+                        <Form.Label>{dictionary.weight[lang]}</Form.Label>
+                        <Form.Control
+                            type="number"
+                            // min="20"
+                            // max="400" 
+                            {...register('weight', {
+                                required: 'Weight is required.',
+                                pattern: {
+                                    value: /^(?:[2-9][0-9]|[1-3][0-9]{2}|400)$/,
+                                    message: "Enter a valid weight.\nA normal weight is a weight between 20 - 400 kilos"
+                                }
+                            })}
+                            className={`${errors.weight ? 'input-error' : ''}`} />
+                        {errors.weight && (
+                            <p className="errorMsg">{errors.weight.message}</p>
+                        )}
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicHeight">
+                        <Form.Label>{dictionary.height[lang]}</Form.Label>
+                        <Form.Control
+                            type="number"
+                            {...register('height', {
+                                required: 'Height is required.',
+                                pattern: {
+                                    value: /^(?:[5-9][0-9]|1[0-9]{2}|2[0-3][0-9]|240)$/,
+                                    message: "Enter a valid height.\nA normal height is a height between 50 - 240"
+                                }
+                            })}
+                            className={`${errors.weight ? 'input-error' : ''}`} />
+                        {errors.height && (
+                            <p className="errorMsg">{errors.height.message}</p>
+                        )}
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicAge">
+                        <Form.Label>{dictionary.age[lang]}</Form.Label>
+                        <Form.Control
+                            type="number"
+                            {...register('age', {
+                                required: 'Age is required.',
+                                pattern: {
+                                    value: /^(?:10[0-9]|100)$/,
+                                    message: "Enter a valid age.\nA normal age is a age between 10 - 100"
+                                }
+                            })}
+                            className={`${errors.weight ? 'input-error' : ''}`} />
+                        {errors.age && (
+                            <p className="errorMsg">{errors.age.message}</p>
+                        )}
+                    </Form.Group>
+                    <Form.Group controlId="formBasicActivityLevel">
+                        <Form.Label>{dictionary.activityLevel[lang]}</Form.Label>
+                        <Form.Control as="select" defaultValue="2" {...register('activityLevel')}>
+                            <option value="1">{dictionary.sedentary[lang]}</option>
+                            <option value="2">{dictionary.moderate[lang]}</option>
+                            <option value="3">{dictionary.active[lang]}</option>
+                        </Form.Control>
                     </Form.Group>
                     <Button variant="primary" type="submit">
                         Next
