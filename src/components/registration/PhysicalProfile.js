@@ -23,10 +23,10 @@ const PhysicalProfile = React.memo((props) => {
             activityLevel: user.activityLevel
         }
     });
-    const onSubmit = (e) => {
-        const data = new FormData(e.target);
-        const user = Object.fromEntries(data.entries());
-        props.updateUser(user)
+    const onSubmit = (data) => {
+        // const data = new FormData(e.target);
+        // const user = Object.fromEntries(data.entries());
+        props.updateUser(data)
         naviget('/signup/menu-settings');
     };
 
@@ -164,7 +164,7 @@ const PhysicalProfile = React.memo((props) => {
                             {...register('age', {
                                 required: 'Age is required.',
                                 pattern: {
-                                    value: /^(?:10[0-9]|100)$/,
+                                    value: /^[1-9][0-9]$|^(100)$/,
                                     message: "Enter a valid age.\nA normal age is a age between 10 - 100"
                                 }
                             })}

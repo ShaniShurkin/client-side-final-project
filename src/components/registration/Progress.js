@@ -30,7 +30,7 @@ import { Link } from 'react-router-dom';
 
 const Progress = ({ location: { pathname } }) => {
   const first = '/signup/';
-  const second = '/signup/pysical-profile';
+  const second = '/signup/physical-profile';
   const third = '/signup/menu-settings';
   const fourth = '/signup/food-settings';
   const isFirstStep = pathname === first;

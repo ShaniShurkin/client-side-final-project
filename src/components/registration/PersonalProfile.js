@@ -30,7 +30,7 @@ const PersonalProfile = React.memo((props) => {
   });
   const onSubmit = (data) => {
     props.updateUser(data)
-    navigate('/signup/pysical-profile');
+    navigate('/signup/physical-profile');
   };
   // function handleSubmit(e) {
   //   e.preventDefault();

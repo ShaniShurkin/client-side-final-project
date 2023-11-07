@@ -29,8 +29,8 @@ export default function Signup() {
             <Progress />
             <Routes> 
                 <Route path="/" Component={(props) => (<Step1 {...props} user={user} updateUser={updateUser}/>)}/>
-                <Route path="/pysical-profile" Component={(props) => (<Step2 {...props} user={user} updateUser={updateUser}/>)}/>
-                <Route path="/menu-settings" Component={(props) => (<Step3/>)}/>
+                <Route path="/physical-profile" Component={(props) => (<Step2 {...props} user={user} updateUser={updateUser}/>)}/>
+                <Route path="/menu-settings" Component={(props) => (<Step3 {...props} user={user} updateUser={updateUser}/>)}/>
                 <Route path="/food-settings" Component={(props) => (<Step4/>)}/>            
             </Routes>
         </div>
