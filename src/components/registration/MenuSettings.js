@@ -16,14 +16,20 @@ const MenuSettings = React.memo((props) => {
     };
     const lang = (useSelector(state => state.langReducer)).langShortName;
     const [meals, setMeals] = useState({});
+    const [categories, setCategories] = useState({});
     useEffect(() => {
         setMeals({
-            "breakfast": { "calories": 0.2, "categories": [1, 2], "he": "ארוחת בוקר", "en": "breakfast" },
-            "snack": { "calories": 0.15, "categories": [1, 2], "he": "חטיף", "en": "snack" },
-            "lunch": { "calories": 0.2, "categories": [1, 2], "he": "ארוחת צהריים", "en": "lunch" },
-            "dinner": { "calories": 0.2, "categories": [1, 2], "he": "ארוחת ערב", "en": "dinner" }
+            "breakfast": { "calories": 0.2, "categories": [1, 2, 3], "he": "ארוחת בוקר", "en": "breakfast" },
+            "snack": { "calories": 0.15, "categories": [2], "he": "חטיף", "en": "snack" },
+            "lunch": { "calories": 0.2, "categories": [3, 2], "he": "ארוחת צהריים", "en": "lunch" },
+            "dinner": { "calories": 0.2, "categories": [1, 3], "he": "ארוחת ערב", "en": "dinner" }
+        });
+        setCategories({
+            1: "Shani", 2: "Tamar", 3: "Tamar and Shani😁"
         })
     }, [])
+
+
     const title = "title"
     const [editing, setEditing] = useState(false);
     const [newTitle, setNewTitle] = useState(title);
@@ -59,23 +65,37 @@ const MenuSettings = React.memo((props) => {
                 {editing ? (
                     <div>
                         <input type="text" value={newTitle} onChange={handleTitleChange} />
-                        <button onClick={handleSaveClick}>Save</button>
-                        <button onClick={handleCancelClick}>Cancel</button>
+                        <Button onClick={handleSaveClick}>Save</Button>
+                        <Button onClick={handleCancelClick}>Cancel</Button>
                     </div>
                 ) : (
                     <div>
                         <h1>{newTitle}</h1>
-                        <button onClick={handleEditClick}>Edit</button>
+                        <Button onClick={handleEditClick}>Edit</Button>
                     </div>
                 )}
             </div>
             <h1>{dictionary.dailyMealStructure[lang]}</h1>
             <Form>
                 {Object.keys(meals).map(name => (
-                    <Form.Group controlId={name}>
-                        {/* <Form.Label >{meals[name][lang]}</Form.Label> */}
-                        <Form.Control defaultValue={meals[name][lang]} />
-                    </Form.Group>
+                    <>
+                        <Form.Group controlId={name}>
+                            <Form.Label >{dictionary.mealName[lang]}</Form.Label>
+                            <Form.Control defaultValue={meals[name][lang]} />
+                        </Form.Group>
+                        <Form.Group controlId={`${meals[name]} calories`}>
+                            <Form.Label >{dictionary.DailyCaloriePercentage[lang]}</Form.Label>
+                            <Form.Control defaultValue={`${meals[name]["calories"] * 100}%`} />
+                        </Form.Group>
+                        <div className="categories">
+                            {meals[name]["categories"].map((cat) => (
+                                <Form.Group controlId={`${meals[name]} categories ${cat}`}>
+                                    <Form.Label >{dictionary.categories[lang]}</Form.Label>
+                                    <Form.Control defaultValue={categories[cat]} />
+                                </Form.Group>
+                            ))}
+                        </div>
+                    </>
                 ))}
             </Form>
         </>

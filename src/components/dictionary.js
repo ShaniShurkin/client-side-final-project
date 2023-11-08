@@ -1,7 +1,7 @@
 const dictionary = {
-    dir:{
-    en:"ltr",
-    he:"rtl",
+    dir: {
+        en: "ltr",
+        he: "rtl",
     },
     submit: {
         en: 'Submit',
@@ -51,7 +51,7 @@ const dictionary = {
         en: 'Password',
         he: 'סיסמה',
     },
-        language: {
+    language: {
         en: 'Language',
         he: 'שפה',
     },
@@ -75,19 +75,19 @@ const dictionary = {
         en: "Sign Out",
         he: 'התנתק'
     },
-    activityLevel:{
+    activityLevel: {
         en: "Physical Activity",
         he: 'פעילות גופנית'
     },
-    sedentary:{
+    sedentary: {
         en: "sedentary",
         he: "ישיבה רבה"
     },
-    moderate:{
+    moderate: {
         en: "moderate",
         he: "מתונה"
     },
-    active:{
+    active: {
         en: "active",
         he: "גבוהה"
     },
@@ -103,33 +103,45 @@ const dictionary = {
         en: "Minimum 8 characters, At least 1 uppercase character, 1 lowercase character, 1 digit, 1 special character",
         he: "מינימום 8 תווים באנגלית, לפחות אות גדולה 1, אות קטנה 1, מספר 1 ותו מיוחד 1",
     },
-    userExists:{
-        en:"The user already exists in the system",
-        he:"המשתמש כבר קיים במערכת",
+    userExists: {
+        en: "The user already exists in the system",
+        he: "המשתמש כבר קיים במערכת",
     },
-    incorrectDetails:{
-        en:"The email address or password are incorrect",
-        he:"כתובת המייל או הסיסמה אינם נכונים",
+    incorrectDetails: {
+        en: "The email address or password are incorrect",
+        he: "כתובת המייל או הסיסמה אינם נכונים",
     },
-    menu:{
-        en:"menu",
-        he:"תפריט",
+    menu: {
+        en: "menu",
+        he: "תפריט",
     },
-    dayWeeks:{
-        en:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'],
-        he:['ראשון',' שני',' שלישי',' רביעי','חמישי ','שישי'],
+    dayWeeks: {
+        en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        he: ['ראשון', ' שני', ' שלישי', ' רביעי', 'חמישי ', 'שישי'],
     },
-    save:{
-        en:"save",
-        he:"שמור"
+    save: {
+        en: "save",
+        he: "שמור"
     },
-    dailyMealStructure:{
-        en:"Daily Meal Structure",
-        he:"מבנה ארוחות יומי",
+    dailyMealStructure: {
+        en: "Daily Meal Structure",
+        he: "מבנה ארוחות יומי",
     },
-    menuSettings:{
-        en:"Menu Settings",
-        he:"הגדרות תפריט"
+    menuSettings: {
+        en: "Menu Settings",
+        he: "הגדרות תפריט"
+    },
+    mealName: {
+        en: "Meal Name",
+        he: "שם ארוחה"
+    },
+    DailyCaloriePercentage: {
+        en: "Daily Calorie Percentage",
+        he: "אחוז קלוריות יומי"
+    },
+    categories: {
+        en: "categories",
+        he: "קטיגוריה"
     }
     // Add more words and translations here
 };
