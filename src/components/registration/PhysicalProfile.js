@@ -30,6 +30,9 @@ const PhysicalProfile = React.memo((props) => {
         naviget('/signup/menu-settings');
     };
 
+    const changeValue = (data) => {
+        props.updateUser(data)
+    };
 
     const dispatch = useDispatch();
     const lang = (useSelector(state => state.langReducer)).langShortName;
@@ -90,9 +93,6 @@ const PhysicalProfile = React.memo((props) => {
 
     return (
         <>
-            <div>
-                Second Step Form
-            </div>
             <Form className="input-form" onSubmit={handleSubmit(onSubmit)}>
                 <div className="col-md-6 offset-md-3">
                     <Form.Group controlId="formBasicGender">

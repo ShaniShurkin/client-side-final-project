@@ -32,6 +32,11 @@ const PersonalProfile = React.memo((props) => {
     props.updateUser(data)
     navigate('/signup/physical-profile');
   };
+
+  const changeValue = (data) => {
+    props.updateUser(data)
+  };
+
   // function handleSubmit(e) {
   //   e.preventDefault();
   //   const data = {
@@ -96,7 +101,7 @@ const PersonalProfile = React.memo((props) => {
   // }
   const validateConfirmPassword = (value) => {
     console.log(value);
-    const password =  getValues("password") ;
+    const password = getValues("password");
     console.log(password)
     if (value !== password) {
       return 'Passwords do not match.';
@@ -105,9 +110,6 @@ const PersonalProfile = React.memo((props) => {
   };
   return (
     <>
-      <div>
-        first Step Form
-      </div>
       <Form className="input-form" onSubmit={handleSubmit(onSubmit)}>
         <div className="col-md-6 offset-md-3">
           <Form.Group controlId="first_name">
@@ -165,7 +167,7 @@ const PersonalProfile = React.memo((props) => {
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>{dictionary.password[lang]}</Form.Label>
             <Form.Control
-            type='password'
+              type='password'
               {...register('password', {
                 required: 'Password is required.',
                 pattern: {
@@ -181,14 +183,14 @@ const PersonalProfile = React.memo((props) => {
           <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
             <Form.Label>{dictionary.confirmPassword[lang]}</Form.Label>
             <Form.Control
-            type='password'
+              type='password'
               {...register('cpassword', {
                 required: 'Password validation is required.',
                 validate: validateConfirmPassword
               })}
               className={`${errors.cpassword ? 'input-error' : ''}`}
             />
-             {errors.cpassword && (
+            {errors.cpassword && (
               <p className="errorMsg">{dictionary.notConfirmedPassword[lang]}</p>
             )}
           </Form.Group>

@@ -7,6 +7,7 @@ import Step3 from './MenuSettings';
 import Step4 from './FoodSettings';
 import { useState, useEffect } from 'react';
 import React from 'react';
+//todo: Make sure the form is filled out automatically even if you don't click Next
 export default function Signup() {
     const [user, setUser] = useState({});
     useEffect(() => {

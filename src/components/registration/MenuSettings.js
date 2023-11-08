@@ -55,40 +55,28 @@ const MenuSettings = React.memo((props) => {
     }
     return (
         <>
-            {/* <div>
-                Third Step Form
-            </div>
-            <Form className="input-form" onSubmit={onSubmit}>
-                <div className="col-md-6 offset-md-3">
-                    
-                    <Button variant="primary" type="submit">
-                        Next
-                    </Button>
-                </div>
-            </Form> */}
-        {/* </> */}
             <div>
-          {editing ? (
-            <div>
-              <input type="text" value={newTitle} onChange={handleTitleChange} />
-              <button onClick={handleSaveClick}>Save</button>
-              <button onClick={handleCancelClick}>Cancel</button>
+                {editing ? (
+                    <div>
+                        <input type="text" value={newTitle} onChange={handleTitleChange} />
+                        <button onClick={handleSaveClick}>Save</button>
+                        <button onClick={handleCancelClick}>Cancel</button>
+                    </div>
+                ) : (
+                    <div>
+                        <h1>{newTitle}</h1>
+                        <button onClick={handleEditClick}>Edit</button>
+                    </div>
+                )}
             </div>
-          ) : (
-            <div>
-              <h1>{newTitle}</h1>
-              <button onClick={handleEditClick}>Edit</button>
-            </div>
-          )}
-        </div>
             <h1>{dictionary.dailyMealStructure[lang]}</h1>
             <Form>
-            {Object.keys(meals).map(name => (
-                                <Form.Group controlId={name}>
-                                    {/* <Form.Label >{meals[name][lang]}</Form.Label> */}
-                                    <Form.Control defaultValue={meals[name][lang]}/>
-                                </Form.Group>
-                            ))}
+                {Object.keys(meals).map(name => (
+                    <Form.Group controlId={name}>
+                        {/* <Form.Label >{meals[name][lang]}</Form.Label> */}
+                        <Form.Control defaultValue={meals[name][lang]} />
+                    </Form.Group>
+                ))}
             </Form>
         </>
 
