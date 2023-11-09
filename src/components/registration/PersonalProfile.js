@@ -170,10 +170,10 @@ const PersonalProfile = React.memo((props) => {
               type='password'
               {...register('password', {
                 required: 'Password is required.',
-                pattern: {
-                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!?]).{8,}$/,
-                  message: dictionary.strongPassword[lang]
-                }
+                // pattern: {
+                //   value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!?]).{8,}$/,
+                //   message: dictionary.strongPassword[lang]
+                //}
               })}
               className={`${errors.password ? 'input-error' : ''}`} />
             {errors.password && (

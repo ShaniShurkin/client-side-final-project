@@ -78,24 +78,25 @@ const MenuSettings = React.memo((props) => {
             <h1>{dictionary.dailyMealStructure[lang]}</h1>
             <Form>
                 {Object.keys(meals).map(name => (
-                    <>
+                    <div  style={{width:"30vw", margin: "auto auto"}}>
                         <Form.Group controlId={name}>
                             <Form.Label >{dictionary.mealName[lang]}</Form.Label>
                             <Form.Control defaultValue={meals[name][lang]} />
                         </Form.Group>
                         <Form.Group controlId={`${meals[name]} calories`}>
                             <Form.Label >{dictionary.DailyCaloriePercentage[lang]}</Form.Label>
-                            <Form.Control defaultValue={`${meals[name]["calories"] * 100}%`} />
+                            <Form.Control defaultValue={`${meals[name]["calories"] * 100}%`}/>
                         </Form.Group>
                         <div className="categories">
+                        <Form.Label>{`${dictionary.categories[lang]}:`}</Form.Label>
                             {meals[name]["categories"].map((cat) => (
                                 <Form.Group controlId={`${meals[name]} categories ${cat}`}>
-                                    <Form.Label >{dictionary.categories[lang]}</Form.Label>
-                                    <Form.Control defaultValue={categories[cat]} />
+                                    <p>{categories[cat]}</p>
                                 </Form.Group>
                             ))}
                         </div>
-                    </>
+                        <br/>
+                    </div>
                 ))}
             </Form>
         </>
