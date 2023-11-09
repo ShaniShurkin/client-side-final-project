@@ -142,6 +142,63 @@ const dictionary = {
     categories: {
         en: "categories",
         he: "קטיגוריה"
+    },
+    //אולי עדיף סיסמה היא שדה חובה וכו...
+    passwordRequired: {
+        en: "Password is required.",
+        he: "נדרשת סיסמה."
+    },
+    firstNameRequired: {
+        en: "First name is required.",
+        he: "נדרש שם פרטי."
+    },
+    lastNamedRequired: {
+        en: "Last name is required.",
+        he: "נדרש שם משפחה."
+    },
+    emailRequired: {
+        en: "Email is required.",
+        he: "נדרש כתובת מייל."
+    },
+    confirmPasswordRequired: {
+        en: "Password validation is required.",
+        he: "נדרש אימות סיסמה."
+    },
+    genderdRequired: {
+        en: "Gender is required.",
+        he: "נדרש לבחור מין."
+    },
+    weightdRequired: {
+        en: "Weight is required.",
+        he: "נדרש משקל."
+    },
+    heightRequired: {
+        en: "Height is required.",
+        he: "נדרש גובה"
+    },
+    ageRequired: {
+        en: "Age is required.",
+        he: "נדרש גיל."
+    },
+    enterValidEmail: {
+        en: "Enter a valid email address.",
+        he: "הכנס כתובת מייל תקינה."
+    },
+    enterValidWeight: {
+        en: "Enter a valid weight. A normal weight is a weight between 20 - 400 kilos.",
+        he: "הכנס משקל תקין. משקל תקין הוא משקל בין 20 - 400 קילו."
+    },
+    enterValidHeight: {
+        en: "Enter a valid height. A normal height is a height between 50 - 240 cm.",
+        he: "הזן גובה תקין. גובה תקין הוא גובה שבין 240 - 50 ס'מ."
+    },
+    enterValidAge: {
+        en: "Enter a valid age. A normal age is a age between 10 - 100.",
+        he: "הזן גיל תקין. גיל תקין הוא גיל שבין 10-100."
+    },
+    next: {
+        en: "Next",
+        he: "הבא"
     }
     // Add more words and translations here
 };

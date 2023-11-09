@@ -118,7 +118,7 @@ const PersonalProfile = React.memo((props) => {
               type="text"
               autoComplete="off"
               {...register('first_name', {
-                required: 'First name is required.'
+                required: dictionary.firstNameRequired[lang]
                 // , pattern: {
                 //   value: /^[^\d\W_]+$/,
                 //   message: 'First name should contain only characters.'
@@ -137,7 +137,7 @@ const PersonalProfile = React.memo((props) => {
               name="last_name"
               autoComplete="off"
               {...register('last_name', {
-                required: 'Last name is required.'
+                required: dictionary.lastNamedRequired[lang]
                 // , pattern: {
                 //   value: /^[^\d\W_]+$/,
                 //   message: 'Last name should contain only characters.'
@@ -153,10 +153,10 @@ const PersonalProfile = React.memo((props) => {
             <Form.Label>{dictionary.email[lang]}</Form.Label>
             <Form.Control
               {...register('email', {
-                required: 'Email is required.',
+                required: dictionary.emailRequired[lang],
                 type: 'email', pattern: {
                   value: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/,
-                  message: 'Enter a valid email address.'
+                  message: dictionary.enterValidEmail[lang]
                 }
               })}
               className={`${errors.email ? 'input-error' : ''}`} />
@@ -169,7 +169,7 @@ const PersonalProfile = React.memo((props) => {
             <Form.Control
               type='password'
               {...register('password', {
-                required: 'Password is required.',
+                required: dictionary.passwordRequired[lang],
                 pattern: {
                   value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!?]).{8,}$/,
                   message: dictionary.strongPassword[lang]
@@ -185,7 +185,7 @@ const PersonalProfile = React.memo((props) => {
             <Form.Control
               type='password'
               {...register('cpassword', {
-                required: 'Password validation is required.',
+                required: dictionary.confirmPasswordRequired[lang],
                 validate: validateConfirmPassword
               })}
               className={`${errors.cpassword ? 'input-error' : ''}`}
@@ -195,7 +195,7 @@ const PersonalProfile = React.memo((props) => {
             )}
           </Form.Group>
           <Button variant="primary" type="submit">
-            Next
+            {dictionary.next[lang]}
           </Button>
         </div>
       </Form>
