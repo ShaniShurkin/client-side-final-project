@@ -104,7 +104,7 @@ const PhysicalProfile = React.memo((props) => {
                             aria-label="radio 1"
                             label={dictionary.male[lang]}
                             {...register('gender', {
-                                required: 'Gender is required.'
+                                required: dictionary.genderdRequired[lang]
                             })}
                             className={`${errors.gender ? 'input-error' : ''}`}
                         />
@@ -115,7 +115,7 @@ const PhysicalProfile = React.memo((props) => {
                             aria-label="radio 2"
                             label={dictionary.female[lang]}
                             {...register('gender', {
-                                required: 'Gender is required.'
+                                required: dictionary.genderdRequired[lang]
                             })}
                             className={`${errors.gender ? 'input-error' : ''}`}
                         />
@@ -130,10 +130,10 @@ const PhysicalProfile = React.memo((props) => {
                             // min="20"
                             // max="400" 
                             {...register('weight', {
-                                required: 'Weight is required.',
+                                required: dictionary.weightdRequired[lang],
                                 pattern: {
                                     value: /^(?:[2-9][0-9]|[1-3][0-9]{2}|400)$/,
-                                    message: "Enter a valid weight.\nA normal weight is a weight between 20 - 400 kilos"
+                                    message: dictionary.enterValidWeight[lang]
                                 }
                             })}
                             className={`${errors.weight ? 'input-error' : ''}`} />
@@ -146,10 +146,10 @@ const PhysicalProfile = React.memo((props) => {
                         <Form.Control
                             type="number"
                             {...register('height', {
-                                required: 'Height is required.',
+                                required: dictionary.heightRequired[lang],
                                 pattern: {
                                     value: /^(?:[5-9][0-9]|1[0-9]{2}|2[0-3][0-9]|240)$/,
-                                    message: "Enter a valid height.\nA normal height is a height between 50 - 240"
+                                    message: dictionary.enterValidHeight[lang]
                                 }
                             })}
                             className={`${errors.weight ? 'input-error' : ''}`} />
@@ -162,10 +162,10 @@ const PhysicalProfile = React.memo((props) => {
                         <Form.Control
                             type="number"
                             {...register('age', {
-                                required: 'Age is required.',
+                                required: dictionary.ageRequired[lang],
                                 pattern: {
                                     value: /^[1-9][0-9]$|^(100)$/,
-                                    message: "Enter a valid age.\nA normal age is a age between 10 - 100"
+                                    message: dictionary.enterValidAge[lang]
                                 }
                             })}
                             className={`${errors.weight ? 'input-error' : ''}`} />
@@ -182,7 +182,7 @@ const PhysicalProfile = React.memo((props) => {
                         </Form.Control>
                     </Form.Group>
                     <Button variant="primary" type="submit">
-                        Next
+                        {dictionary.next[lang]}
                     </Button>
                 </div>
             </Form>
