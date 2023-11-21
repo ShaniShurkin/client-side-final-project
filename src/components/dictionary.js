@@ -199,6 +199,10 @@ const dictionary = {
     next: {
         en: "Next",
         he: "הבא"
+    },
+    caloriesErrorMsg: {
+        en: "Divide your calorie count correctly (complete to 100%)",
+        he: "חלק את סך הקלוריות ליום באופן נכון (השלם ל 100%)"
     }
     // Add more words and translations here
 };
