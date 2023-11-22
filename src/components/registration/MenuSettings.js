@@ -145,12 +145,12 @@ const MenuSettings = React.memo((props) => {
                                     </Modal.Header>
                                     <Modal.Body>
                                         {
-                                            // categories.map((key, value)=>{
-                                            //     <Form.Check // prettier-ignore
-                                            //     type='checkbox'
-                                            //     label={value}
-                                            // />
-                                            // })
+                                            Object.keys(categories).map((id)=>{
+                                                <Form.Check // prettier-ignore
+                                                type='checkbox'
+                                                label={categories[id]}
+                                            />
+                                            })
                                         }
                                        
                                     </Modal.Body>
