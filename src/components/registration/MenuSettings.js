@@ -34,27 +34,35 @@ const MenuSettings = React.memo((props) => {
         }
     }, [])
 
-    const title = "title";
-    const [editing, setEditing] = useState(false);
-    const [newTitle, setNewTitle] = useState(title);
+    // const title = "title";
+    // const [editing, setEditing] = useState(false);
+    // const [newTitle, setNewTitle] = useState(title);
 
-    const handleTitleChange = (event) => {
-        setNewTitle(event.target.value);
-    };
+    // const handleTitleChange = (event) => {
+    //     setNewTitle(event.target.value);
+    // };
 
-    const handleEditClick = () => {
-        setEditing(true);
-    };
+    // const handleEditClick = () => {
+    //     setEditing(true);
+    // };
 
-    const handleSaveClick = () => {
-        setEditing(false);
-        // save newTitle to database or parent component state
-    };
+    // const handleSaveClick = () => {
+    //     setEditing(false);
+    //     // save newTitle to database or parent component state
+    // };
 
-    const handleCancelClick = () => {
-        setEditing(false);
-        // setNewTitle(title);
-    };
+    // const handleCancelClick = () => {
+    //     setEditing(false);
+    //     // setNewTitle(title);
+    // };
+    // const f = (code) => {
+    //     fetch(urlMenu + `meals/${code}`, {
+    //         method: 'GET'
+    //     })
+    //         .then(res => res.json())
+    //         .then(data => { setMeals(data); console.log(meals); })
+    //         .catch(error => console.error(error))
+    // }
     const verifyDailyCalorieCount = () => {
         let calories = 0;
         for (let meal in meals) {
@@ -80,7 +88,7 @@ const MenuSettings = React.memo((props) => {
         let value = e.target.value
         setMeals(meals, meals[name][lang] = value)
     }
-    function handleRemove(name, category) {
+    function handleRemoveCat(name, category) {
         if (meals[name].categories.length == 1) {
             //TODO: handle this error
             console.log("You can't remove last item")
@@ -96,20 +104,31 @@ const MenuSettings = React.memo((props) => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    function handleAdd(name) {
+    function findCheckedCats(name){
+        const checkedCheckboxes = [];
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach((checkbox) => {
+            if (checkbox.name.includes(name) && checkbox.checked) {
+                let cname = checkbox.name
+                // Extract category id from checkbox name
+                checkedCheckboxes.push(Number(cname.substring(cname.lastIndexOf("_") + 1)));
+            }
+        });
+        return checkedCheckboxes
+    }
+    function handleSaveCat(name) {
+        const checkedCategories = findCheckedCats(name)
+        const updatedMeal = { ...meals[name], categories: [...checkedCategories] };
+        let copiedMeals = { ...meals }
+        copiedMeals[name] = updatedMeal
+        setMeals({ ...copiedMeals });
+        console.log(meals)
+        handleClose()
     }
 
-    // const f = (code) => {
-    //     fetch(urlMenu + `meals/${code}`, {
-    //         method: 'GET'
-    //     })
-    //         .then(res => res.json())
-    //         .then(data => { setMeals(data); console.log(meals); })
-    //         .catch(error => console.error(error))
-    // }
     return (
         <>
-            <div>
+            {/* <div>
                 {editing ? (
                     <div>
                         <input type="text" value={newTitle} onChange={handleTitleChange} />
@@ -122,7 +141,7 @@ const MenuSettings = React.memo((props) => {
                         <Button onClick={handleEditClick}>Edit</Button>
                     </div>
                 )}
-            </div>
+            </div> */}
             <h1>{dictionary.dailyMealStructure[lang]}</h1>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 {Object.keys(meals).map(name => (
@@ -139,36 +158,40 @@ const MenuSettings = React.memo((props) => {
                             <Form.Label>
                                 <span><b>{`${dictionary.categories[lang]}:`}</b></span>
                                 <Button onClick={handleShow}>+</Button>
-                                <Modal show={show} onHide={handleClose}>
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>Modal heading</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>
-                                        {
-                                            Object.keys(categories).map((id)=>{
-                                                <Form.Check // prettier-ignore
-                                                type='checkbox'
-                                                label={categories[id]}
-                                            />
-                                            })
-                                        }
-                                       
-                                    </Modal.Body>
-                                    <Modal.Footer>
-                                        <Button variant="secondary" onClick={handleClose}>
-                                            Close
-                                        </Button>
-                                        <Button variant="primary" onClick={handleClose}>
-                                            Save Changes
-                                        </Button>
-                                    </Modal.Footer>
-                                </Modal>
                             </Form.Label>
+                            <Modal show={show} onHide={handleClose}>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>{`${meals[name][lang]} categories`}</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    {
+                                        Object.keys(categories).map((id) => (
+                                            <div>
+                                                <Form.Check
+                                                    name={`${name}_cat_${id}`}
+                                                    type='checkbox'
+                                                    label={categories[id]}
+                                                    defaultChecked={meals[name]["categories"].includes(Number(id))}
+                                                />
+                                            </div>
+                                        ))
+                                    }
+
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={handleClose}>
+                                        Close
+                                    </Button>
+                                    <Button variant="primary" onClick={()=>handleSaveCat(name)}>
+                                        Save Changes
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
                             {meals[name]["categories"].map((cat) => (
                                 <ListGroup controlId={`${meals[name]} categories ${cat}`}>
                                     <ListGroup.Item>
                                         <span>{categories[cat]}</span>
-                                        <Button type="button" onClick={() => handleRemove(name, cat)}>-</Button>
+                                        <Button type="button" onClick={() => handleRemoveCat(name, cat)}>-</Button>
                                     </ListGroup.Item>
                                 </ListGroup>
                             ))}
@@ -183,7 +206,6 @@ const MenuSettings = React.memo((props) => {
                     {dictionary.next[lang]}
                 </Button>
             </Form>
-
         </>
 
     );
