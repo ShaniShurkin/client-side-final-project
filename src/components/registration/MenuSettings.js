@@ -11,6 +11,7 @@ import React from "react";
 const MenuSettings = React.memo((props) => {
     const navigate = useNavigate();
     const [meals, setMeals] = useState({ ...props.meals })
+    const [currentMeal, setCurrentMeal] = useState(null)
     const { register, handleSubmit, getValues, setError, clearErrors, formState: { errors } } = useForm({
         defaultValues: {
             meals: meals
@@ -33,6 +34,9 @@ const MenuSettings = React.memo((props) => {
             })
         }
     }, [])
+    useEffect(() => {
+        console.log(currentMeal)
+    }, [currentMeal])
 
     // const title = "title";
     // const [editing, setEditing] = useState(false);
@@ -100,15 +104,17 @@ const MenuSettings = React.memo((props) => {
         setMeals({ ...copiedMeals });
         console.log(meals)
     }
-    const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    function findCheckedCats(name){
+    const handleClose = () => setCurrentMeal(null);
+    const handleShow = (name) => {
+        setCurrentMeal(name)
+    }
+    function findCheckedCats(name) {
         const checkedCheckboxes = [];
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach((checkbox) => {
             if (checkbox.name.includes(name) && checkbox.checked) {
+                console.log(checkbox.name)
                 let cname = checkbox.name
                 // Extract category id from checkbox name
                 checkedCheckboxes.push(Number(cname.substring(cname.lastIndexOf("_") + 1)));
@@ -117,7 +123,9 @@ const MenuSettings = React.memo((props) => {
         return checkedCheckboxes
     }
     function handleSaveCat(name) {
+        console.log(name)
         const checkedCategories = findCheckedCats(name)
+        console.log(checkedCategories)
         const updatedMeal = { ...meals[name], categories: [...checkedCategories] };
         let copiedMeals = { ...meals }
         copiedMeals[name] = updatedMeal
@@ -145,7 +153,7 @@ const MenuSettings = React.memo((props) => {
             <h1>{dictionary.dailyMealStructure[lang]}</h1>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 {Object.keys(meals).map(name => (
-                    <div style={{ width: "30vw", margin: "auto auto" }}>
+                    <div key={`meal_${name}`} style={{ width: "30vw", margin: "auto auto" }}>
                         <Form.Group controlId={name}>
                             <Form.Label><b>{dictionary.mealName[lang]}</b></Form.Label>
                             <Form.Control defaultValue={meals[name][lang]} onChange={(e) => changeMealName(e, name)} />
@@ -157,16 +165,16 @@ const MenuSettings = React.memo((props) => {
                         <div className="categories">
                             <Form.Label>
                                 <span><b>{`${dictionary.categories[lang]}:`}</b></span>
-                                <Button onClick={handleShow}>+</Button>
+                                <Button onClick={() => handleShow(name)}>+</Button>
                             </Form.Label>
-                            <Modal show={show} onHide={handleClose}>
+                            {meals[currentMeal] && <Modal show={true} key={`categories_${currentMeal}`} onHide={handleClose}>
                                 <Modal.Header closeButton>
-                                    <Modal.Title>{`${meals[name][lang]} categories`}</Modal.Title>
+                                    <Modal.Title>{`${meals[currentMeal][lang]} categories`}</Modal.Title>
                                 </Modal.Header>
                                 <Modal.Body>
                                     {
                                         Object.keys(categories).map((id) => (
-                                            <div>
+                                            <div key={`${currentMeal}_cat_${id}`}>
                                                 <Form.Check
                                                     name={`${name}_cat_${id}`}
                                                     type='checkbox'
@@ -182,13 +190,13 @@ const MenuSettings = React.memo((props) => {
                                     <Button variant="secondary" onClick={handleClose}>
                                         Close
                                     </Button>
-                                    <Button variant="primary" onClick={()=>handleSaveCat(name)}>
+                                    <Button variant="primary" onClick={() => handleSaveCat(name)}>
                                         Save Changes
                                     </Button>
                                 </Modal.Footer>
-                            </Modal>
+                            </Modal>}
                             {meals[name]["categories"].map((cat) => (
-                                <ListGroup controlId={`${meals[name]} categories ${cat}`}>
+                                <ListGroup key={`${meals[name]}_categories_${cat}`}>
                                     <ListGroup.Item>
                                         <span>{categories[cat]}</span>
                                         <Button type="button" onClick={() => handleRemoveCat(name, cat)}>-</Button>
