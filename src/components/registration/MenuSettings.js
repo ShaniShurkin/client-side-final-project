@@ -4,9 +4,10 @@ import { useSelector } from "react-redux";
 import { urlMenu } from "../../endpoints";
 import dictionary from "../dictionary";
 import { useForm } from 'react-hook-form';
-import { Form, Button, ListGroup, Alert, Modal } from 'react-bootstrap';
+import { Form, Button, ListGroup, Alert } from 'react-bootstrap';
 import { createRoutesFromChildren, useNavigate } from 'react-router-dom';
 import React from "react";
+import Categories from "./Categories";
 
 const MenuSettings = React.memo((props) => {
     const navigate = useNavigate();
@@ -111,10 +112,9 @@ const MenuSettings = React.memo((props) => {
     }
     function findCheckedCats(name) {
         const checkedCheckboxes = [];
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach((checkbox) => {
             if (checkbox.name.includes(name) && checkbox.checked) {
-                console.log(checkbox.name)
                 let cname = checkbox.name
                 // Extract category id from checkbox name
                 checkedCheckboxes.push(Number(cname.substring(cname.lastIndexOf("_") + 1)));
@@ -123,14 +123,11 @@ const MenuSettings = React.memo((props) => {
         return checkedCheckboxes
     }
     function handleSaveCat(name) {
-        console.log(name)
         const checkedCategories = findCheckedCats(name)
-        console.log(checkedCategories)
         const updatedMeal = { ...meals[name], categories: [...checkedCategories] };
         let copiedMeals = { ...meals }
         copiedMeals[name] = updatedMeal
         setMeals({ ...copiedMeals });
-        console.log(meals)
         handleClose()
     }
 
@@ -153,7 +150,7 @@ const MenuSettings = React.memo((props) => {
             <h1>{dictionary.dailyMealStructure[lang]}</h1>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 {Object.keys(meals).map(name => (
-                    <div key={`meal_${name}`} style={{ width: "30vw", margin: "auto auto" }}>
+                    <div key={`meal_${name}`} style={{ width: "30vw", margin: "5vh 5vw", padding: "2vw", backgroundColor: "lightgray" }}>
                         <Form.Group controlId={name}>
                             <Form.Label><b>{dictionary.mealName[lang]}</b></Form.Label>
                             <Form.Control defaultValue={meals[name][lang]} onChange={(e) => changeMealName(e, name)} />
@@ -167,34 +164,14 @@ const MenuSettings = React.memo((props) => {
                                 <span><b>{`${dictionary.categories[lang]}:`}</b></span>
                                 <Button onClick={() => handleShow(name)}>+</Button>
                             </Form.Label>
-                            {meals[currentMeal] && <Modal show={true} key={`categories_${currentMeal}`} onHide={handleClose}>
-                                <Modal.Header closeButton>
-                                    <Modal.Title>{`${meals[currentMeal][lang]} categories`}</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    {
-                                        Object.keys(categories).map((id) => (
-                                            <div key={`${currentMeal}_cat_${id}`}>
-                                                <Form.Check
-                                                    name={`${name}_cat_${id}`}
-                                                    type='checkbox'
-                                                    label={categories[id]}
-                                                    defaultChecked={meals[name]["categories"].includes(Number(id))}
-                                                />
-                                            </div>
-                                        ))
-                                    }
-
-                                </Modal.Body>
-                                <Modal.Footer>
-                                    <Button variant="secondary" onClick={handleClose}>
-                                        Close
-                                    </Button>
-                                    <Button variant="primary" onClick={() => handleSaveCat(name)}>
-                                        Save Changes
-                                    </Button>
-                                </Modal.Footer>
-                            </Modal>}
+                            {currentMeal && currentMeal == name ?
+                                <Categories
+                                    key={name}
+                                    categoriesLst={categories}
+                                    currentMeal={{ name: name, ...meals[currentMeal] }}
+                                    close={handleClose}
+                                    save={handleSaveCat} />
+                                : null}
                             {meals[name]["categories"].map((cat) => (
                                 <ListGroup key={`${meals[name]}_categories_${cat}`}>
                                     <ListGroup.Item>
@@ -207,6 +184,9 @@ const MenuSettings = React.memo((props) => {
                         <br />
                     </div>
                 ))}
+                <Button variant="primary" type="submit">
+                    {dictionary.addMeal[lang]}
+                </Button>
                 {errors.meals && (
                     <p className="errorMsg">{errors.meals.message}</p>
                 )}

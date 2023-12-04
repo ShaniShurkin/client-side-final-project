@@ -203,6 +203,14 @@ const dictionary = {
     caloriesErrorMsg: {
         en: "Divide your calorie count correctly (complete to 100%)",
         he: "חלק את סך הקלוריות ליום באופן נכון (השלם ל 100%)"
+    },
+    addMeal: {
+        en: "Add Meal",
+        he: "הוסף ארוחה"
+    },
+    removeMeal: {
+        en: "remove Meal",
+        he: "הסר ארוחה"
     }
     // Add more words and translations here
 };
