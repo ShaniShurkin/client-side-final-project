@@ -94,11 +94,6 @@ const MenuSettings = React.memo((props) => {
         setMeals(meals, meals[name][lang] = value)
     }
     function handleRemoveCat(name, category) {
-        if (meals[name].categories.length == 1) {
-            //TODO: handle this error
-            console.log("You can't remove last item")
-            return
-        }
         const updatedMeal = { ...meals[name], categories: meals[name].categories.filter(cat => cat !== category) };
         let copiedMeals = { ...meals }
         copiedMeals[name] = updatedMeal
@@ -176,11 +171,14 @@ const MenuSettings = React.memo((props) => {
                                 <ListGroup key={`${meals[name]}_categories_${cat}`}>
                                     <ListGroup.Item>
                                         <span>{categories[cat]}</span>
-                                        <Button type="button" onClick={() => handleRemoveCat(name, cat)}>-</Button>
+                                        <Button type="button" onClick={() => handleRemoveCat(name, cat)} disabled={meals[name].categories.length == 1}>-</Button>
                                     </ListGroup.Item>
                                 </ListGroup>
                             ))}
                         </div>
+                        {/* TODO: put this nessage in dictionary */}
+                        {meals[name].categories.length == 1 && <p style={{ color: "yellow" }}>At least one of the categories must be selected</p>}
+
                         <br />
                     </div>
                 ))}

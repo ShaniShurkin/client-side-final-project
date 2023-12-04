@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, Button, Modal } from 'react-bootstrap';
 
 function Categories(props) {
@@ -22,6 +22,10 @@ function Categories(props) {
             setSingleCat(true)
         }
     }
+
+    useEffect(() => {
+        handleCheckboxChange({ target: { name: `${currentMeal.name}_` } });
+      }, []);
 
 
     return (
