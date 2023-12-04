@@ -112,7 +112,7 @@ const MenuSettings = React.memo((props) => {
     }
     function findCheckedCats(name) {
         const checkedCheckboxes = [];
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach((checkbox) => {
             if (checkbox.name.includes(name) && checkbox.checked) {
                 let cname = checkbox.name
