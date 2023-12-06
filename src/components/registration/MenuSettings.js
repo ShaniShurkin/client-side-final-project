@@ -98,7 +98,6 @@ const MenuSettings = React.memo((props) => {
         let copiedMeals = { ...meals }
         copiedMeals[name] = updatedMeal
         setMeals({ ...copiedMeals });
-        console.log(meals)
     }
 
     const handleClose = () => setCurrentMeal(null);
@@ -138,27 +137,28 @@ const MenuSettings = React.memo((props) => {
         const neededKeys = ['en', 'he', 'categories', 'calories']
         // validate that all required keys are in meal
         if (neededKeys.every(key => Object.keys(meals[name]).includes(key)) == false) {
-            console.log("includes")
-            return false;
-        }
-        console.log("checking catgories")
-        if (meals[name].categories.length == 0) {
-            console.log("length")
             return false;
         }
         const names = [meals[name]["en"], meals[name]["he"]]
-        console.log("checking name")
         if (!(names.some(str => str.length > 0))) {
-            console.log("names")
+            return false;
+        }
+        if (meals[name].categories.length == 0) {
             return false;
         }
         return true
     }
-    function saveMeal(name){
-        let copiedMeals = {...meals};
+    function handleSaveMeal(name) {
+        let copiedMeals = { ...meals };
         delete copiedMeals[name]["inProcess"];
-        setMeals({...copiedMeals});
+        setMeals({ ...copiedMeals });
     }
+    function handleDeleteMeal(name) {
+        let copiedMeals = { ...meals };
+        delete copiedMeals[name];
+        setMeals({ ...copiedMeals });
+    }
+
 
     return (
         <>
@@ -180,6 +180,7 @@ const MenuSettings = React.memo((props) => {
             <Form onSubmit={handleSubmit(onSubmit)}>
                 {Object.keys(meals).map(name => (
                     <div key={`meal_${name}`} style={{ width: "30vw", margin: "5vh 5vw", padding: "2vw", borderStyle: "solid", borderWidth: "3px", borderColor: "lightgray" }}>
+                        <Button disabled={Object.keys(meals).length == 1} onClick={()=>handleDeleteMeal(name)}><b>X</b></Button>
                         <Form.Group controlId={name}>
                             <Form.Label><b>{dictionary.mealName[lang]}</b></Form.Label>
                             <Form.Control defaultValue={meals[name][lang]} onChange={(e) => changeMealName(e, name)} />
@@ -225,7 +226,7 @@ const MenuSettings = React.memo((props) => {
                                             </div>
                                         ))
                                     }
-                                    <Button disabled={isMealValid(name) == false} onClick={() => saveMeal(name)}>{dictionary.save[lang]}</Button>
+                                    <Button disabled={isMealValid(name) == false} onClick={() => handleSaveMeal(name)}>{dictionary.save[lang]}</Button>
                                 </div>}
                             {/* TODO: put this nessage in dictionary */}
                             {meals[name].categories.length < 2 && <p style={{ color: "yellow" }}>At least one of the categories must be selected</p>}
@@ -233,9 +234,7 @@ const MenuSettings = React.memo((props) => {
                         <br />
                     </div>
                 ))}
-                {console.log(meals[Object.keys(meals).pop()])}
                 <Button variant="primary" onClick={handleAddMeal} disabled={"inProcess" in meals[Object.keys(meals).pop()]}>
-                 {/* disabled={"inProcess" in meals[Object.keys(meals).pop()]}> */}
                     {dictionary.addMeal[lang]}
                 </Button>
                 {errors.meals && (
