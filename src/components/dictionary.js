@@ -211,6 +211,10 @@ const dictionary = {
     removeMeal: {
         en: "remove Meal",
         he: "הסר ארוחה"
+    },
+    singleMeal: {
+        en: "At least one of the categories must be selected",
+        he: "חובה לבחור קטגוריה אחת לפחות"
     }
     // Add more words and translations here
 };

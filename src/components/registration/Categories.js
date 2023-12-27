@@ -3,9 +3,7 @@ import { Form, Button, Modal } from 'react-bootstrap';
 
 function Categories(props) {
     const { categoriesLst, currentMeal, close, save } = { ...props }
-    const [singleCat, setSingleCat] = useState(false) 
     const handleCheckboxChange = (e) => {
-        setSingleCat(false)
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         const checked = []
         const currentCBName = e.target.name.substring(0, e.target.name.indexOf("_"))
@@ -19,7 +17,6 @@ function Categories(props) {
         if (checked.length == 1) {
             console.log(checked[0].disabled);
             checked[0].disabled = true;
-            setSingleCat(true)
         }
     }
 
@@ -48,7 +45,6 @@ function Categories(props) {
                         </div>
                     ))
                 }
-            {singleCat && <p style={{color: "yellow"}}>At least one of the categories must be selected</p>}
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={close}>

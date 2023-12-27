@@ -75,7 +75,6 @@ const MenuSettings = React.memo((props) => {
         }
         return calories == 1
     }
-
     const changeCalories = (e, name) => {
         let value = Number(e.target.value) / 100
         setMeals(meals, meals[name]["calories"] = value)
@@ -99,7 +98,6 @@ const MenuSettings = React.memo((props) => {
         copiedMeals[name] = updatedMeal
         setMeals({ ...copiedMeals });
     }
-
     const handleClose = () => setCurrentMeal(null);
     const handleShow = (name) => {
         setCurrentMeal(name)
@@ -177,64 +175,74 @@ const MenuSettings = React.memo((props) => {
                 )}
             </div> */}
             <h1>{dictionary.dailyMealStructure[lang]}</h1>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-                {Object.keys(meals).map(name => (
-                    <div key={`meal_${name}`} style={{ width: "30vw", margin: "5vh 5vw", padding: "2vw", borderStyle: "solid", borderWidth: "3px", borderColor: "lightgray" }}>
-                        <Button disabled={Object.keys(meals).length == 1} onClick={()=>handleDeleteMeal(name)}><b>X</b></Button>
-                        <Form.Group controlId={name}>
-                            <Form.Label><b>{dictionary.mealName[lang]}</b></Form.Label>
-                            <Form.Control defaultValue={meals[name][lang]} onChange={(e) => changeMealName(e, name)} />
-                        </Form.Group>
-                        <Form.Group controlId={`${meals[name]} calories`}>
-                            <Form.Label> <b>{dictionary.DailyCaloriePercentage[lang]}</b></Form.Label>
-                            <Form.Control type="number" min={5} max={100} defaultValue={meals[name]["calories"] * 100} onChange={(e) => changeCalories(e, name)} />
-                        </Form.Group>
-                        <div className="categories">
-                            <Form.Label>
-                                <span><b>{`${dictionary.categories[lang]}:`}</b></span>
-                                {!("inProcess" in meals[name]) ? <Button onClick={() => handleShow(name)}>+</Button> : null}
-                            </Form.Label>
-                            {!("inProcess" in meals[name]) ?
-                                <div>
-                                    {currentMeal && currentMeal == name ?
-                                        <Categories
-                                            key={name}
-                                            categoriesLst={categories}
-                                            currentMeal={{ name: name, ...meals[currentMeal] }}
-                                            close={handleClose}
-                                            save={handleSaveCat} />
-                                        : null}
-                                    {meals[name]["categories"].map((cat) => (
-                                        <ListGroup key={`${meals[name]}_categories_${cat}`}>
-                                            <ListGroup.Item>
-                                                <span>{categories[cat]}</span>
-                                                <Button type="button" onClick={() => handleRemoveCat(name, cat)} disabled={meals[name].categories.length == 1}>-</Button>
-                                            </ListGroup.Item>
-                                        </ListGroup>
-                                    ))}
-                                </div> :
-                                <div>
-                                    {
-                                        Object.keys(categories).map((id) => (
-                                            <div key={`${name}_cat_${id}`} >
-                                                <Form.Check
-                                                    name={`${name}_cat_${id}`}
-                                                    type='checkbox'
-                                                    label={categories[id]}
-                                                    onChange={() => handleSaveCat(name)}
-                                                />
-                                            </div>
-                                        ))
-                                    }
-                                    <Button disabled={isMealValid(name) == false} onClick={() => handleSaveMeal(name)}>{dictionary.save[lang]}</Button>
-                                </div>}
-                            {/* TODO: put this nessage in dictionary */}
-                            {meals[name].categories.length < 2 && <p style={{ color: "yellow" }}>At least one of the categories must be selected</p>}
+            <Form onSubmit={handleSubmit(onSubmit)} >
+                <div>
+                    {Object.keys(meals).map(name => (
+                        <div key={`meal_${name}`}
+                            style={{
+                                width: "30%",
+                                margin: "5vh 5vw",
+                                padding: "2vw",
+                                borderStyle: "solid",
+                                borderWidth: "3px",
+                                borderColor: "lightgray",
+                                textAlign: "center"
+                            }}>
+                            <Button disabled={Object.keys(meals).length == 1} onClick={() => handleDeleteMeal(name)}><b>X</b></Button>
+                            <Form.Group controlId={name}>
+                                <Form.Label><b>{dictionary.mealName[lang]}</b></Form.Label>
+                                <Form.Control defaultValue={meals[name][lang]} onChange={(e) => changeMealName(e, name)} />
+                            </Form.Group>
+                            <Form.Group controlId={`${meals[name]} calories`}>
+                                <Form.Label> <b>{dictionary.DailyCaloriePercentage[lang]}</b></Form.Label>
+                                <Form.Control type="number" min={5} max={100} defaultValue={meals[name]["calories"] * 100} onChange={(e) => changeCalories(e, name)} />
+                            </Form.Group>
+                            <div className="categories">
+                                <Form.Label>
+                                    <span><b>{`${dictionary.categories[lang]}:`}</b></span>
+                                    {!("inProcess" in meals[name]) ? <Button onClick={() => handleShow(name)}>+</Button> : null}
+                                </Form.Label>
+                                {!("inProcess" in meals[name]) ?
+                                    <div>
+                                        {currentMeal && currentMeal == name ?
+                                            <Categories
+                                                key={name}
+                                                categoriesLst={categories}
+                                                currentMeal={{ name: name, ...meals[currentMeal] }}
+                                                close={handleClose}
+                                                save={handleSaveCat} />
+                                            : null}
+                                        {meals[name]["categories"].map((cat) => (
+                                            <ListGroup key={`${meals[name]}_categories_${cat}`}>
+                                                <ListGroup.Item>
+                                                    <span>{categories[cat]}</span>
+                                                    <Button type="button" onClick={() => handleRemoveCat(name, cat)} disabled={meals[name].categories.length == 1}>-</Button>
+                                                </ListGroup.Item>
+                                            </ListGroup>
+                                        ))}
+                                    </div> :
+                                    <div>
+                                        {
+                                            Object.keys(categories).map((id) => (
+                                                <div key={`${name}_cat_${id}`} >
+                                                    <Form.Check
+                                                        name={`${name}_cat_${id}`}
+                                                        type='checkbox'
+                                                        label={categories[id]}
+                                                        onChange={() => handleSaveCat(name)}
+                                                    />
+                                                </div>
+                                            ))
+                                        }
+                                        <Button disabled={isMealValid(name) == false} onClick={() => handleSaveMeal(name)}>{dictionary.save[lang]}</Button>
+                                    </div>}
+                            </div>
+                            <br />
                         </div>
-                        <br />
-                    </div>
-                ))}
-                <Button variant="primary" onClick={handleAddMeal} disabled={"inProcess" in meals[Object.keys(meals).pop()]}>
+                    ))}
+                </div>
+                <Button variant="primary" onClick={handleAddMeal}
+                    disabled={"inProcess" in meals[Object.keys(meals).pop()] || Object.keys(meals).length == 8}>
                     {dictionary.addMeal[lang]}
                 </Button>
                 {errors.meals && (

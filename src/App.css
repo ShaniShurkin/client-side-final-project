@@ -61,10 +61,6 @@ h1 {
   padding-top: 7%;
 }
 
-.steps .step:last-child {
-  margin-top: 3%;
-}
-
 .steps .step.active div:first-of-type {
   background-color: var(--base-color);
   border: 1px solid transparent;

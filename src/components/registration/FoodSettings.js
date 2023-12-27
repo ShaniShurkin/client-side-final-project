@@ -11,9 +11,6 @@ const FoodSettings = React.memo((props) => {
     };
     return (
         <>
-            <div>
-                Fourth Step Form
-            </div>
             <Form className="input-form" onSubmit={onSubmit}>
                 <div className="col-md-6 offset-md-3">
                     <Form.Group controlId="email">
